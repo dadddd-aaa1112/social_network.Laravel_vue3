@@ -18061,7 +18061,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var _router_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/router */ "./resources/js/router/router.js");
 /* harmony import */ var _components_UI_Index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/UI/Index */ "./resources/js/components/UI/Index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /**
@@ -18089,7 +18089,7 @@ _components_UI_Index__WEBPACK_IMPORTED_MODULE_2__["default"].forEach(function (c
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 app.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
-app.use(_router__WEBPACK_IMPORTED_MODULE_1__["default"]).use(_store__WEBPACK_IMPORTED_MODULE_3__["default"]).mount('#app');
+app.use(_router_router__WEBPACK_IMPORTED_MODULE_1__["default"]).use(_store__WEBPACK_IMPORTED_MODULE_3__["default"]).mount('#app');
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the pages. Then, you may begin adding components to this application
@@ -18214,10 +18214,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/router.js":
-/*!********************************!*\
-  !*** ./resources/js/router.js ***!
-  \********************************/
+/***/ "./resources/js/router/middlewarePipeline.js":
+/*!***************************************************!*\
+  !*** ./resources/js/router/middlewarePipeline.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -18225,20 +18225,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-/* harmony import */ var _views_layout_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/layout/Container */ "./resources/js/views/layout/Container.vue");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _middleware__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./middleware */ "./resources/js/middleware/index.js");
-/* harmony import */ var _views_Auth_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/Auth/Login */ "./resources/js/views/Auth/Login.vue");
-/* harmony import */ var _views_Auth_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/Auth/Register */ "./resources/js/views/Auth/Register.vue");
-/* harmony import */ var _views_pages_Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/pages/Dashboard */ "./resources/js/views/pages/Dashboard.vue");
-/* harmony import */ var _views_pages_UserProfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/pages/UserProfile */ "./resources/js/views/pages/UserProfile.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function middlewarePipeline(context, middleware, index) {
+  var nextMiddleware = middleware[index];
+
+  if (!nextMiddleware) {
+    return context.next;
+  }
+
+  return function () {
+    var nextPipeline = middlewarePipeline(context, middleware, index + 1);
+    nextMiddleware(_objectSpread(_objectSpread({}, context), {}, {
+      next: nextPipeline
+    }));
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (middlewarePipeline);
+
+/***/ }),
+
+/***/ "./resources/js/router/router.js":
+/*!***************************************!*\
+  !*** ./resources/js/router/router.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var _views_layout_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/layout/Container */ "./resources/js/views/layout/Container.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _middleware__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../middleware */ "./resources/js/middleware/index.js");
+/* harmony import */ var _views_Auth_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../views/Auth/Login */ "./resources/js/views/Auth/Login.vue");
+/* harmony import */ var _views_Auth_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../views/Auth/Register */ "./resources/js/views/Auth/Register.vue");
+/* harmony import */ var _views_pages_Dashboard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/pages/Dashboard */ "./resources/js/views/pages/Dashboard.vue");
+/* harmony import */ var _views_pages_UserProfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../views/pages/UserProfile */ "./resources/js/views/pages/UserProfile.vue");
+/* harmony import */ var _middlewarePipeline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./middlewarePipeline */ "./resources/js/router/middlewarePipeline.js");
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -18282,9 +18320,9 @@ var routes = [{
     }
   }]
 }];
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_7__.createRouter)({
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
   routes: routes,
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_7__.createWebHistory)(process.env.BASE_URL)
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createWebHistory)(process.env.BASE_URL)
 });
 router.beforeEach(function (to, from, next) {
   if (!to.meta.middleware) {
@@ -18298,7 +18336,9 @@ router.beforeEach(function (to, from, next) {
     next: next,
     store: _store__WEBPACK_IMPORTED_MODULE_1__["default"]
   };
-  return middleware[0](_objectSpread({}, context));
+  return middleware[0](_objectSpread(_objectSpread({}, context), {}, {
+    next: (0,_middlewarePipeline__WEBPACK_IMPORTED_MODULE_7__["default"])(context, middleware, 1)
+  }));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -18340,9 +18380,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var state = {
   user: {
-    loggedIn: false,
-    isSubscribed: false,
-    token: localStorage.getItem('token' || 0)
+    loggedIn: true,
+    isSubscribed: true,
+    token: !localStorage.getItem('token' || 0)
   }
 };
 var actions = {};

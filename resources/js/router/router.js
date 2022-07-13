@@ -1,11 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import Container from './views/layout/Container'
-import store from './store'
-import Middleware from "./middleware";
-import Login from "./views/Auth/Login";
-import Register from "./views/Auth/Register";
-import Dashboard from "./views/pages/Dashboard";
-import UserProfile from "./views/pages/UserProfile";
+import Container from '../views/layout/Container'
+import store from '../store'
+import Middleware from "../middleware";
+import Login from "../views/Auth/Login";
+import Register from "../views/Auth/Register";
+import Dashboard from "../views/pages/Dashboard";
+import UserProfile from "../views/pages/UserProfile";
+import middlewarePipeline from "./middlewarePipeline";
 
 
 const routes = [
@@ -76,7 +77,8 @@ router.beforeEach((to, from, next) => {
 
     return middleware[0] ({
 
-        ...context
+        ...context,
+        next: middlewarePipeline(context, middleware, 1)
     })
 })
 
