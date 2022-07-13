@@ -9,9 +9,13 @@
 window.Vue = require('vue').default;
 import {createApp} from 'vue';
 import router from './router'
+import components from './components/UI/Index'
 
 const app = createApp();
 
+components.forEach(component => {
+    app.component(component.name, component)
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
