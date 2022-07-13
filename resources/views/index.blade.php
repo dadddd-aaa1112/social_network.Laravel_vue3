@@ -9,7 +9,8 @@
 </head>
 <body>
 <div id="app">
-    <example-component></example-component>
+    <router-view>
+    </router-view>
 
 hello 111
 </div>
