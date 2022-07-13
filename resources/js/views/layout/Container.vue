@@ -6,14 +6,19 @@
         <template v-slot:button>Регистрация</template>
     </my-button>
 
+
     <my-input></my-input>
+
 </template>
 
 <script>
 
+import Login from "../Auth/Login";
+
+
 export default {
     name: "Container.vue",
-
+    components: { Login},
 };
 </script>
 

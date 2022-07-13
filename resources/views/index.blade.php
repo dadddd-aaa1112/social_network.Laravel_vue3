@@ -12,8 +12,6 @@
 <div id="app">
     <router-view>
     </router-view>
-
-hello 111
 </div>
 <script src="{{mix('js/app.js')}}"></script>
 </body>
