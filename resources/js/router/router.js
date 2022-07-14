@@ -21,31 +21,31 @@ const routes = [
         name: Login,
         component: Login,
         meta: {
-            middleware: [Middleware.guest]
-        }
+             middleware: [Middleware.guest]
+         }
     },
     {
         path: '/register',
         name: Register,
         component: Register,
         meta: {
-            middleware: [Middleware.guest]
-        }
+             middleware: [Middleware.guest]
+         }
     },
     {
         path: '/dashboard',
         name: Dashboard,
         component: Dashboard,
-        meta: {
-            middleware: [Middleware.auth]
-        },
+       meta: {
+           middleware: [Middleware.auth]
+         },
         children: [
             {
                 path: '/dashboard/profile',
                 name: 'dashboard.profile',
                 component: UserProfile,
-                meta: {
-                    middleware: [Middleware.auth, Middleware.isSubscribed]
+                 meta: {
+                  middleware: [Middleware.auth, Middleware.isSubscribed]
                 }
             }
         ]
